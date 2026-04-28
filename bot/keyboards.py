@@ -1,22 +1,19 @@
 from aiogram.filters.callback_data import CallbackData
-from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton, ReplyKeyboardMarkup, KeyboardButton
+from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton, ReplyKeyboardRemove
 
 
 class ReviewTypeCallback(CallbackData, prefix="review"):
     action: str
 
 
-def main_menu_keyboard() -> ReplyKeyboardMarkup:
-    return ReplyKeyboardMarkup(
-        keyboard=[[KeyboardButton(text="Оставить отзыв")]],
-        resize_keyboard=True,
-    )
-
-
-def cancel_menu_keyboard() -> ReplyKeyboardMarkup:
-    return ReplyKeyboardMarkup(
-        keyboard=[[KeyboardButton(text="Отмена")]],
-        resize_keyboard=True,
+def welcome_keyboard() -> InlineKeyboardMarkup:
+    return InlineKeyboardMarkup(
+        inline_keyboard=[
+            [InlineKeyboardButton(
+                text="✍️ Оставить отзыв",
+                callback_data=ReviewTypeCallback(action="open_menu").pack(),
+            )]
+        ]
     )
 
 
@@ -45,3 +42,7 @@ def review_type_keyboard() -> InlineKeyboardMarkup:
             )],
         ]
     )
+
+
+def remove_keyboard() -> ReplyKeyboardRemove:
+    return ReplyKeyboardRemove()
