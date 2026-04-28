@@ -7,22 +7,21 @@ from aiogram.types import Message, CallbackQuery
 
 from bot.config import DISCOUNT_REDIRECT_URL
 from bot.google_sheets import build_angry_payload, build_positive_payload, build_valentine_payload, send_to_sheets
-from bot.keyboards import ReviewTypeCallback, welcome_keyboard, review_type_keyboard, remove_keyboard
+from bot.keyboards import ReviewTypeCallback, review_type_keyboard, remove_keyboard
 from bot.states import AngryReviewStates, PositiveReviewStates, ValentineStates
 
 logger = logging.getLogger(__name__)
 router = Router()
 
 WELCOME_TEXT = (
-    "☕ <b>Добро пожаловать!</b>\n\n"
+    "☕️ <b>Добро пожаловать!</b>\n\n"
     "Здесь вы можете оставить отзыв о нашей кофейне, "
-    "написать валентинку бариста или получить скидку.\n\n"
-    "Нажмите кнопку ниже, чтобы начать."
+    "написать валентинку бариста или получить скидку."
 )
 
 
 async def _send_welcome(target: Message) -> None:
-    await target.answer(WELCOME_TEXT, reply_markup=welcome_keyboard())
+    await target.answer(WELCOME_TEXT, reply_markup=review_type_keyboard())
 
 
 # ─── /start ──────────────────────────────────────────────────────────────────
@@ -46,15 +45,6 @@ async def cmd_cancel(message: Message, state: FSMContext) -> None:
     await _send_welcome(message)
 
 
-# ─── Кнопка "Оставить отзыв" (inline) ───────────────────────────────────────
-
-@router.callback_query(ReviewTypeCallback.filter(F.action == "open_menu"))
-async def cb_open_menu(callback: CallbackQuery, state: FSMContext) -> None:
-    await callback.answer()
-    await state.clear()
-    await callback.message.answer("Выберите тип обращения:", reply_markup=review_type_keyboard())
-
-
 # ─── Inline "Отмена" ─────────────────────────────────────────────────────────
 
 @router.callback_query(ReviewTypeCallback.filter(F.action == "cancel"))
@@ -72,7 +62,7 @@ async def cb_angry_review(callback: CallbackQuery, state: FSMContext) -> None:
     await callback.answer()
     await state.set_state(AngryReviewStates.waiting_for_text)
     await callback.message.answer(
-        "Напишите ваш отзыв в формате: адрес, время, текст отзыва."
+        "Напишите ваш отзыв 😡\nФормат: адрес, время, текст отзыва."
     )
 
 

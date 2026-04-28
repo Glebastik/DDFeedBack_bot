@@ -6,17 +6,6 @@ class ReviewTypeCallback(CallbackData, prefix="review"):
     action: str
 
 
-def welcome_keyboard() -> InlineKeyboardMarkup:
-    return InlineKeyboardMarkup(
-        inline_keyboard=[
-            [InlineKeyboardButton(
-                text="✍️ Оставить отзыв",
-                callback_data=ReviewTypeCallback(action="open_menu").pack(),
-            )]
-        ]
-    )
-
-
 def review_type_keyboard() -> InlineKeyboardMarkup:
     return InlineKeyboardMarkup(
         inline_keyboard=[
