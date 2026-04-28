@@ -13,6 +13,13 @@ def main_menu_keyboard() -> ReplyKeyboardMarkup:
     )
 
 
+def cancel_menu_keyboard() -> ReplyKeyboardMarkup:
+    return ReplyKeyboardMarkup(
+        keyboard=[[KeyboardButton(text="Отмена")]],
+        resize_keyboard=True,
+    )
+
+
 def review_type_keyboard() -> InlineKeyboardMarkup:
     return InlineKeyboardMarkup(
         inline_keyboard=[
@@ -31,6 +38,10 @@ def review_type_keyboard() -> InlineKeyboardMarkup:
             [InlineKeyboardButton(
                 text="🎁 Хочу скидку в вашей сети",
                 callback_data=ReviewTypeCallback(action="discount").pack(),
+            )],
+            [InlineKeyboardButton(
+                text="🚫 Отмена",
+                callback_data=ReviewTypeCallback(action="cancel").pack(),
             )],
         ]
     )
