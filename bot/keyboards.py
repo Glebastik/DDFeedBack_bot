@@ -15,12 +15,12 @@ def review_type_keyboard() -> InlineKeyboardMarkup:
                     callback_data=ReviewTypeCallback(action="angry_review").pack(),
                 ),
                 InlineKeyboardButton(
-                    text="� Позитивный отзыв",
+                    text="😊 Позитивный отзыв",
                     callback_data=ReviewTypeCallback(action="positive_review").pack(),
                 ),
             ],
             [InlineKeyboardButton(
-                text="� Валентинка для бариста",
+                text="💌 Валентинка для бариста",
                 callback_data=ReviewTypeCallback(action="valentine").pack(),
             )],
             [InlineKeyboardButton(
